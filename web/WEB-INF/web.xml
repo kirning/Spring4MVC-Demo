@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!--开启servlet拦截器-->
+    <servlet>
+        <!--使用DispatcherServlet类拦截请求-->
+        <servlet-name>springWeb</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--设置配置文件路径-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>WEB-INF/configs/springWeb.xml</param-value>
+        </init-param>
+        <!--指代该servlet的初始化优先级-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <!--设置该拦截器拦截什么请求-->
+        <servlet-name>springWeb</servlet-name>
+        <!--这里不能是 /* 因为这样的话 jsp页面会被当做txt文件解析，也就直接看到了jsp的源码-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!--配置spring容器的配置文件的位置-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/configs/applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <!--设置监听器，目的是让spring容器管理对象，对于一个纯碎的spring MVC来说，这不是必须的-->
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+</web-app>
